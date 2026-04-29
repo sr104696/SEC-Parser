@@ -1,0 +1,6 @@
+.venv/
+output/
+debug/
+__pycache__/
+*.pyc
+.playwright/
