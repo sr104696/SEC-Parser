@@ -28,8 +28,10 @@ It is designed to scrape hydrated Vybe/SPA pages, submit a ticker query before c
 |---|---|
 | `crawl_vybe_app.py` | Main Playwright crawler and debug harness |
 | `run_scrape.bat` | Windows one-click runner with venv/dependency setup |
+| `sec_lookup_reference.py` | Independent SEC API reference lookup for `BE`/other tickers |
 | `requirements.txt` | Python dependencies |
 | `APP_PATCH_NOTES.md` | Findings and app optimization plan |
+| `.gitignore` | Keeps local output/debug/runtime files out of commits |
 
 Generated local folders after running:
 
@@ -83,6 +85,22 @@ set TICKER=BE
 run_scrape.bat https://sec-scanner-abd-inc22.vybe.build/ --headed --settle-ms 5000 --concurrency 1
 ```
 
+## Independent SEC API reference test
+
+Use this to confirm that ticker lookup and SEC filings work outside the Vybe UI:
+
+```bat
+.venv\Scripts\python.exe sec_lookup_reference.py BE --output output\be_reference.md
+```
+
+If you have not run `run_scrape.bat` yet, create/install first:
+
+```bat
+py -3 -m venv .venv
+.venv\Scripts\python.exe -m pip install -r requirements.txt
+.venv\Scripts\python.exe sec_lookup_reference.py BE --output output\be_reference.md
+```
+
 ## Manual Python usage
 
 ```bash
@@ -101,6 +119,7 @@ After each run, inspect:
 2. `debug/diagnostics.json` — visited routes, interaction log, console errors, request failures.
 3. `debug/*.png` — screenshots for short/empty/error captures.
 4. `debug/*.html` — raw DOM for failed captures.
+5. `output/be_reference.md` — expected SEC result for `BE` from the independent reference script.
 
 ## Test ticker matrix
 
